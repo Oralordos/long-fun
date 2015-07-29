@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="Toen's Medieval Strategy" tilewidth="16" tileheight="16">
-  <image source="../public/images/Tile-set - Toen's Medieval Strategy (16x16) - v.1.0.png" width="112" height="832"/>
+  <image source="../public/images/toens-medieval-strategy.png" width="112" height="832"/>
   <terraintypes>
    <terrain name="Grass" tile="-1"/>
   </terraintypes>
@@ -51,7 +51,7 @@
  </layer>
  <layer name="Doodad Layer" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1kEKwkAMBdDsba8heBK3bqz3v4kGGkjTZKyV0aT8BwEVF/mT6UyJAAAAAGKnuSrj/se5NPtdXPq2swtnGJzfowzs1qmXb0R7ycsmsuV490wM5OfJlmMLb39VzOHNCzn+Q85jq0oOfra9+0RkziF92310fdVk6vHb1hZa69uSce05R+t+y7b2LdG7FGut/d559vZJDp1dzoAs5J1Dn61ejpGWObyzIIsoh/SsK9MsIjqHnZd8zjoLTXLYDHouFWS8K6zzhv9UyHGn9R1X5c4DAAAAAACAY3gCfiUQTg==
+   eJztmMGKwzAMRH1Jc9j2Nwr9kl73stv//5PWNENntWM3hjSWQQ9EE0hhxrIlJSkFQRAEwRgclph6C9kAeBmBryVGoLSuWf9pCcbeg8uWohqY03N/45fJHo7iPyUPme+NdLUwm1A+Unr5nJd75Q3s7WNKL30KPhP5OVuXjkn76eGj5IHhPMAPUPvLqw9+ztYCVcOUj0/WZnUeas/OQss7H/hPj/6i9CpQjy3sw+7DPXm3fvlsq34CrI81e/dToJYB6F7T062PPbHru3YNr4/4NXHbVloz2Uetv3nUXKI0S2VqfaF2XnrS4oO9owZ4ATMH11bl45T++lhbC3pQ8gHNHF5ygR6v6iX7sPnCtZdcTBR2voUP64Hz4gnMJXY+6fF+1MqZrnm2U/nwzE/63+NqPQ/7Dl57zlA1eFZU36f4fd77dx8+J/bce86BBVoPFKNoV3jfN0EQBEEQBEEwEnfWUhLB
   </data>
  </layer>
 </map>
