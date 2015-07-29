@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="Toen's Medieval Strategy" tilewidth="16" tileheight="16">
+  <image source="../public/images/Tile-set - Toen's Medieval Strategy (16x16) - v.1.0.png" width="112" height="832"/>
+  <terraintypes>
+   <terrain name="Grass" tile="-1"/>
+  </terraintypes>
+  <tile id="2" terrain="0,0,0,0"/>
+  <tile id="175" terrain="0,0,0,"/>
+  <tile id="176" terrain="0,0,,"/>
+  <tile id="177" terrain="0,0,,0"/>
+  <tile id="178" terrain="0,0,0,"/>
+  <tile id="179" terrain="0,0,,"/>
+  <tile id="180" terrain="0,0,,0"/>
+  <tile id="182" terrain="0,,0,"/>
+  <tile id="184" terrain=",0,,0"/>
+  <tile id="185" terrain="0,,0,"/>
+  <tile id="187" terrain=",0,,0"/>
+  <tile id="189" terrain="0,,0,0"/>
+  <tile id="190" terrain=",,0,0"/>
+  <tile id="191" terrain=",0,0,0"/>
+  <tile id="192" terrain="0,,0,0"/>
+  <tile id="193" terrain=",,0,0"/>
+  <tile id="194" terrain=",0,0,0"/>
+  <tile id="196" terrain=",,,0"/>
+  <tile id="197" terrain=",,0,0"/>
+  <tile id="198" terrain=",,0,"/>
+  <tile id="199" terrain=",,,0"/>
+  <tile id="200" terrain=",,0,0"/>
+  <tile id="201" terrain=",,0,"/>
+  <tile id="203" terrain=",0,,0"/>
+  <tile id="205" terrain="0,,0,"/>
+  <tile id="206" terrain=",0,,0"/>
+  <tile id="208" terrain="0,,0,"/>
+  <tile id="210" terrain=",0,,"/>
+  <tile id="211" terrain="0,0,,"/>
+  <tile id="212" terrain="0,,,"/>
+  <tile id="213" terrain=",0,,"/>
+  <tile id="214" terrain="0,0,,"/>
+  <tile id="215" terrain="0,,,"/>
+ </tileset>
+ <layer name="Water Layer" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKHr3+RbLsdAwVVTVVVVVVVVVVXV5w+e2nK/
+  </data>
+ </layer>
+ <layer name="Ground Layer" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztl41qQjEMhQu+/7uom4gy/BvTq8hkuB8fxx6wWAqKNmkSRg4c9MIF83GStIbgcrm09BG9jV5Fz6N3uuXcVReuta6K7+/Rvcyz7B1wrbNnacbu8tuphrLWWn8JMqBPFkx1l0ZWUpnsGzEkL0P7HkMWXD30CE8rltZZSLBIZpF7ysjQKTGkTDZMHAclhuRPBgatfuLORHq2W2Wi3VP/jYN6Z7HCMSYwaO5brjwsMfSjfyo5rOwpmHKmW5kLmLKr3gzUT80Ds7EwUD81D0tZUDgmBmrPXXt2/EYPDdQPv4T6nQsdo0cGODju7NpzgixODBzor0GQzwXn9zcTQ8nzGmRmpt+g/ls8rfKh3KNqBB5OltRHkgxJXDtAoo/uiSsTyv8jLlHmBTlgF2pmUeoZHpwJqF9jFh5V4smN+f27fLY4E1wul8vlcrms6QxeOXdV
+  </data>
+ </layer>
+ <layer name="Doodad Layer" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1kEKwkAMBdDsba8heBK3bqz3v4kGGkjTZKyV0aT8BwEVF/mT6UyJAAAAAGKnuSrj/se5NPtdXPq2swtnGJzfowzs1qmXb0R7ycsmsuV490wM5OfJlmMLb39VzOHNCzn+Q85jq0oOfra9+0RkziF92310fdVk6vHb1hZa69uSce05R+t+y7b2LdG7FGut/d559vZJDp1dzoAs5J1Dn61ejpGWObyzIIsoh/SsK9MsIjqHnZd8zjoLTXLYDHouFWS8K6zzhv9UyHGn9R1X5c4DAAAAAACAY3gCfiUQTg==
+  </data>
+ </layer>
+</map>

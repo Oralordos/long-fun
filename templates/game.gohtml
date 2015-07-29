@@ -1,0 +1,17 @@
+{{define "game"}}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game</title>
+  <link rel="stylesheet" href="/public/reset.css">
+</head>
+<body>
+  <noscript>Javascript is required for the game.</noscript>
+  <div id="game"></div>
+  <script>
+    var map = '{{.Map}}'
+  </script>
+  <script src="/public/pixi.min.js"></script>
+  <script src="/public/game.js"></script>
+</body>
+</html>{{end}}
