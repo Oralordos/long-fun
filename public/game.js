@@ -45,7 +45,7 @@ function createMap(mapData) {
   container.mapHeight = mapData.Tileheight * mapData.Height;
   var tilesX = mapData.Tilesets[0].Imagewidth / mapData.Tilewidth;
   var tilesY = mapData.Tilesets[0].Imageheight / mapData.Tileheight;
-  loadTileset(tilesX, tilesY, mapData.Tilewidth, mapData.Tileheight, '/public/images/Tile-set - Toen\'s Medieval Strategy (16x16) - v.1.0.png', function() {
+  loadTileset(tilesX, tilesY, mapData.Tilewidth, mapData.Tileheight, '/public/images/toens-medieval-strategy.png', function() {
   for (var layer = 0; layer < mapData.Layers.length; layer++) {
     if (mapData.Layers[layer].Name != 'UnitLayer') {
       for (var x = 0; x < mapData.Width; x++) {
