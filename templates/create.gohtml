@@ -1,4 +1,4 @@
-{{define "create"}}<!DOCTYPE html>
+{{define "create-user"}}<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -11,6 +11,30 @@
       <input type="text" name="username" placeholder="Username" required>
     </label>
     <input type="submit" value="Create Account">
+  </form>
+</body>
+</html>{{end}}
+
+{{define "create-game"}}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game</title>
+  <link rel="stylesheet" href="/public/reset.css">
+</head>
+<body>
+  <form method="POST">
+    <label>Game name:
+      <input type="text" name="name" placeholder="Game Name" required>
+    </label>
+    <label>Map:
+      <select name="map">
+        {{range .Maps}}
+        <option value="{{.}}">{{.}}</option>
+        {{end}}
+      </select>
+    </label>
+    <input type="submit" value="Create">
   </form>
 </body>
 </html>{{end}}

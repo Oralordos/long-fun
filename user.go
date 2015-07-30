@@ -19,6 +19,19 @@ type userData struct {
 	Games    []gameID
 }
 
+func addGameToProfile(ctx context.Context, g *gameID) error {
+	u := user.Current(ctx)
+	k := datastore.NewKey(ctx, "User", u.Email, 0, nil)
+	var uData userData
+	err := datastore.Get(ctx, k, &uData)
+	if err != nil {
+		return err
+	}
+	uData.Games = append(uData.Games, *g)
+	_, err = datastore.Put(ctx, k, &uData)
+	return err
+}
+
 func getUser(ctx context.Context) *userData {
 	u := user.Current(ctx)
 	if u == nil {

@@ -4,9 +4,14 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
+
+	"golang.org/x/net/context"
 
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
 
 	"github.com/julienschmidt/httprouter"
@@ -36,11 +41,31 @@ type tileset struct {
 	Filename   string
 }
 
+type mapLayers [][]int
+
 type gameMap struct {
 	Width   int
 	Height  int
-	Layers  [][]int
+	Layers  mapLayers
 	Tileset tileset
+}
+
+func getMaps() ([]string, error) {
+	var maps []string
+	err := filepath.Walk("maps", func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if strings.HasSuffix(path, ".json") {
+			name := info.Name()
+			maps = append(maps, name[:len(name)-5])
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return maps, nil
 }
 
 func loadMap(filename string) (*game, error) {
@@ -65,7 +90,7 @@ func loadMap(filename string) (*game, error) {
 			Filename:   jsonMapData.Tilesets[0].Image[2:],
 		},
 	}
-	gameLayers := [][]int{}
+	gameLayers := mapLayers{}
 	for _, l := range jsonMapData.Layers {
 		if l.Name == "Unit Layer" {
 			// TODO Load the units.
@@ -80,19 +105,28 @@ func loadMap(filename string) (*game, error) {
 	return g, nil
 }
 
+func getGame(ctx context.Context, gameID int64) (*game, error) {
+	k := datastore.NewKey(ctx, "Game", "", gameID, nil)
+	var g game
+	err := datastore.Get(ctx, k, &g)
+	if err != nil {
+		return nil, err
+	}
+	return &g, nil
+}
+
 func handleGetState(res http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	ctx := appengine.NewContext(req)
 	gn := p.ByName("gameName")
-	gameName, err := strconv.ParseInt(gn, 10, 64)
-	var mapName string
-	// TODO Get the map name from the datastore
-	if gameName == 1 {
-		mapName = "test"
-	}
-	gameMap, err := loadMap(mapName)
+	gameID, err := strconv.ParseInt(gn, 10, 64)
 	if err != nil {
-		http.Error(res, "Internal Server Error", http.StatusInternalServerError)
-		log.Errorf(ctx, err.Error())
+		http.NotFound(res, req)
+		return
+	}
+	gameMap, err := getGame(ctx, gameID)
+	if err != nil {
+		http.NotFound(res, req)
+		log.Warningf(ctx, err.Error())
 		return
 	}
 	err = json.NewEncoder(res).Encode(gameMap)
