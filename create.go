@@ -54,6 +54,7 @@ func handleCreateGame(res http.ResponseWriter, req *http.Request, _ httprouter.P
 		log.Errorf(ctx, err.Error())
 		return
 	}
+	g.Name = name
 	id, err := addGame(ctx, g)
 	if err != nil {
 		http.Error(res, "Internal Server Error", http.StatusInternalServerError)

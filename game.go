@@ -16,21 +16,17 @@ import (
 
 type game struct {
 	Map   gameMap
-	Units int
+	Units []unit
 	Name  string
 }
 
 type datastoreGame struct {
-	MapWidth             int
-	MapHeight            int
-	MapTilesetTilewidth  int
-	MapTilesetTileheight int
-	MapTilesetWidth      int
-	MapTilesetHeight     int
-	MapTilesetFilename   string
-	MapLayers            []byte
-	Units                int
-	Name                 string
+	MapWidth   int     `datastore:",noindex"`
+	MapHeight  int     `datastore:",noindex"`
+	MapTileset tileset `datastore:",noindex"`
+	MapLayers  []byte  `datastore:",noindex"`
+	Units      []unit  `datastore:",noindex"`
+	Name       string
 }
 
 func (g *game) Load(ps []datastore.Property) error {
@@ -40,14 +36,10 @@ func (g *game) Load(ps []datastore.Property) error {
 		return err
 	}
 	g.Name = d.Name
-	g.Units = d.Units
 	g.Map.Width = d.MapWidth
 	g.Map.Height = d.MapHeight
-	g.Map.Tileset.Width = d.MapTilesetWidth
-	g.Map.Tileset.Height = d.MapTilesetHeight
-	g.Map.Tileset.Tilewidth = d.MapTilesetTilewidth
-	g.Map.Tileset.Tileheight = d.MapTilesetTileheight
-	g.Map.Tileset.Filename = d.MapTilesetFilename
+	g.Map.Tileset = d.MapTileset
+	g.Units = d.Units
 	var l mapLayers
 	err = json.Unmarshal(d.MapLayers, &l)
 	if err != nil {
@@ -59,15 +51,11 @@ func (g *game) Load(ps []datastore.Property) error {
 
 func (g *game) Save() ([]datastore.Property, error) {
 	d := datastoreGame{
-		MapWidth:             g.Map.Width,
-		MapHeight:            g.Map.Height,
-		MapTilesetTilewidth:  g.Map.Tileset.Tilewidth,
-		MapTilesetTileheight: g.Map.Tileset.Tileheight,
-		MapTilesetWidth:      g.Map.Tileset.Width,
-		MapTilesetHeight:     g.Map.Tileset.Height,
-		MapTilesetFilename:   g.Map.Tileset.Filename,
-		Units:                g.Units,
-		Name:                 g.Name,
+		MapWidth:   g.Map.Width,
+		MapHeight:  g.Map.Height,
+		MapTileset: g.Map.Tileset,
+		Name:       g.Name,
+		Units:      g.Units,
 	}
 	bs, err := json.Marshal(g.Map.Layers)
 	if err != nil {

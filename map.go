@@ -91,16 +91,26 @@ func loadMap(filename string) (*game, error) {
 		},
 	}
 	gameLayers := mapLayers{}
+	units := []unit{}
 	for _, l := range jsonMapData.Layers {
 		if l.Name == "Unit Layer" {
-			// TODO Load the units.
+			for x := 0; x < jsonMapData.Width; x++ {
+				for y := 0; y < jsonMapData.Height; y++ {
+					ct := l.Data[x+y*jsonMapData.Width]
+					if ct != 0 {
+						newUnit := newUnit(ct, x, y)
+						units = append(units, *newUnit)
+					}
+				}
+			}
 		} else {
 			gameLayers = append(gameLayers, l.Data)
 		}
 	}
 	mapData.Layers = gameLayers
 	g := &game{
-		Map: mapData,
+		Map:   mapData,
+		Units: units,
 	}
 	return g, nil
 }
