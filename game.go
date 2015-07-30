@@ -20,25 +20,61 @@ type game struct {
 	Name  string
 }
 
-func (l *game) Load(ps []datastore.Property) error {
-	bs := ps[0].Value.([]byte)
-	err := json.Unmarshal(bs, l)
-	return err
+type datastoreGame struct {
+	MapWidth             int
+	MapHeight            int
+	MapTilesetTilewidth  int
+	MapTilesetTileheight int
+	MapTilesetWidth      int
+	MapTilesetHeight     int
+	MapTilesetFilename   string
+	MapLayers            []byte
+	Units                int
+	Name                 string
 }
 
-func (l *game) Save() ([]datastore.Property, error) {
-	// TODO Only convert map data with json
-	bs, err := json.Marshal(l)
+func (g *game) Load(ps []datastore.Property) error {
+	var d datastoreGame
+	err := datastore.LoadStruct(&d, ps)
+	if err != nil {
+		return err
+	}
+	g.Name = d.Name
+	g.Units = d.Units
+	g.Map.Width = d.MapWidth
+	g.Map.Height = d.MapHeight
+	g.Map.Tileset.Width = d.MapTilesetWidth
+	g.Map.Tileset.Height = d.MapTilesetHeight
+	g.Map.Tileset.Tilewidth = d.MapTilesetTilewidth
+	g.Map.Tileset.Tileheight = d.MapTilesetTileheight
+	g.Map.Tileset.Filename = d.MapTilesetFilename
+	var l mapLayers
+	err = json.Unmarshal(d.MapLayers, &l)
+	if err != nil {
+		return err
+	}
+	g.Map.Layers = l
+	return nil
+}
+
+func (g *game) Save() ([]datastore.Property, error) {
+	d := datastoreGame{
+		MapWidth:             g.Map.Width,
+		MapHeight:            g.Map.Height,
+		MapTilesetTilewidth:  g.Map.Tileset.Tilewidth,
+		MapTilesetTileheight: g.Map.Tileset.Tileheight,
+		MapTilesetWidth:      g.Map.Tileset.Width,
+		MapTilesetHeight:     g.Map.Tileset.Height,
+		MapTilesetFilename:   g.Map.Tileset.Filename,
+		Units:                g.Units,
+		Name:                 g.Name,
+	}
+	bs, err := json.Marshal(g.Map.Layers)
 	if err != nil {
 		return nil, err
 	}
-	return []datastore.Property{
-		datastore.Property{
-			Name:    "Layers",
-			Value:   bs,
-			NoIndex: true,
-		},
-	}, nil
+	d.MapLayers = bs
+	return datastore.SaveStruct(&d)
 }
 
 type gameID struct {
