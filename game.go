@@ -9,6 +9,17 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+type game struct {
+	Map   gameMap
+	Units int
+	Name  string
+}
+
+type gameID struct {
+	ID   int
+	Name string
+}
+
 func handleGame(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	var gameData struct {
 		GameID string

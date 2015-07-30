@@ -1,11 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="16" tileheight="16" nextobjectid="1">
  <tileset firstgid="1" name="Toen's Medieval Strategy" tilewidth="16" tileheight="16">
   <image source="../public/images/toens-medieval-strategy.png" width="112" height="832"/>
   <terraintypes>
    <terrain name="Grass" tile="-1"/>
   </terraintypes>
   <tile id="2" terrain="0,0,0,0"/>
+  <tile id="37">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="112">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="113">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="114">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="115">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="116">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="117">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="119">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="120">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="121">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="122">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="123">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="124">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="126">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="127">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="128">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="129">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="130">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="131">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="133">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="134">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="135">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="136">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="137">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="138">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
   <tile id="175" terrain="0,0,0,"/>
   <tile id="176" terrain="0,0,,"/>
   <tile id="177" terrain="0,0,,0"/>
@@ -52,6 +192,11 @@
  <layer name="Doodad Layer" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztmMGKwzAMRH1Jc9j2Nwr9kl73stv//5PWNENntWM3hjSWQQ9EE0hhxrIlJSkFQRAEwRgclph6C9kAeBmBryVGoLSuWf9pCcbeg8uWohqY03N/45fJHo7iPyUPme+NdLUwm1A+Unr5nJd75Q3s7WNKL30KPhP5OVuXjkn76eGj5IHhPMAPUPvLqw9+ztYCVcOUj0/WZnUeas/OQss7H/hPj/6i9CpQjy3sw+7DPXm3fvlsq34CrI81e/dToJYB6F7T062PPbHru3YNr4/4NXHbVloz2Uetv3nUXKI0S2VqfaF2XnrS4oO9owZ4ATMH11bl45T++lhbC3pQ8gHNHF5ygR6v6iX7sPnCtZdcTBR2voUP64Hz4gnMJXY+6fF+1MqZrnm2U/nwzE/63+NqPQ/7Dl57zlA1eFZU36f4fd77dx8+J/bce86BBVoPFKNoV3jfN0EQBEEQBEEwEnfWUhLB
+  </data>
+ </layer>
+ <layer name="Unit Layer" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt08EJACAMA8CO7dfNBWewFOLdBAkhVQAAQIc9HaBJai8AoNeaDsCVukNqL3jFRwAAgJ8c7TcC4w==
   </data>
  </layer>
 </map>

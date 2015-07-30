@@ -8,7 +8,9 @@ import (
 
 func init() {
 	r := httprouter.New()
-	r.GET("/", handleGame)
-	r.GET("/games/:gameName", handleGetState)
+	r.GET("/", handleIndex)
+	r.GET("/gamesList", handleGamesList)
+	r.GET("/game/:gameID", handleGame)
+	r.GET("/api/game/:gameName", handleGetState)
 	http.Handle("/", r)
 }

@@ -42,11 +42,6 @@ type gameMap struct {
 	Tileset tileset
 }
 
-type game struct {
-	Map   gameMap
-	Units int
-}
-
 func loadMap(filename string) (*game, error) {
 	f, err := os.Open("maps/" + filename + ".json")
 	if err != nil {
@@ -66,7 +61,7 @@ func loadMap(filename string) (*game, error) {
 			Height:     jsonMapData.Tilesets[0].Imageheight / jsonMapData.Tileheight,
 			Tilewidth:  jsonMapData.Tilewidth,
 			Tileheight: jsonMapData.Tileheight,
-			Filename:   jsonMapData.Tilesets[0].Image[3:],
+			Filename:   jsonMapData.Tilesets[0].Image[2:],
 		},
 	}
 	gameLayers := [][]int{}

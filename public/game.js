@@ -25,7 +25,7 @@ Game.prototype.tick = function() {
 
 function getGameState(callback) {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/games/' + gameId);
+  xhr.open('GET', '/api/game/' + gameId);
   xhr.addEventListener('readystatechange', function() {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {

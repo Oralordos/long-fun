@@ -1,0 +1,15 @@
+{{define "index"}}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game</title>
+</head>
+<body>
+  {{if .Username}}
+  <h2>Welcome {{.Username}}</h2>
+  <a href="/gamesList">Your games</a>
+  {{else}}
+  <a href="{{.LoginURL}}">Login</a>
+  {{end}}
+</body>
+</html>{{end}}
