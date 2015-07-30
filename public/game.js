@@ -4,6 +4,7 @@ var SCREEN_HEIGHT = 600;
 function Game() {
   PIXI.Container.call(this);
   this.units = [];
+  this.selectedUnit = null;
   this.map = null;
   this.stage = new PIXI.Container();
   this.renderer = PIXI.autoDetectRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, {backgroundColor: 0x1099bb});
@@ -15,12 +16,41 @@ Game.prototype = Object.create(PIXI.Container.prototype);
 Game.prototype.constructor = Game;
 
 Game.prototype.setState = function(gameState) {
-  this.map = new Map(gameState.Map);
+  var self = this;
+  this.redIDs = gameState.Map.Tileset.RedTeam;
+  this.blueIDs = gameState.Map.Tileset.BlueTeam;
+  this.yellowIDs = gameState.Map.Tileset.YellowTeam;
+  this.greenIDs = gameState.Map.Tileset.GreenTeam;
+  this.map = new Map();
+  this.map.createMap(gameState.Map, function() {
+    self.units = [];
+    for (var i = 0; i < gameState.Units.length; i++) {
+      var currentUnit = gameState.Units[i];
+      var newUnit = new Unit(currentUnit.TileID, currentUnit.Position.X, currentUnit.Position.Y, gameState.Map.Tileset.Tilewidth, gameState.Map.Tileset.Tileheight);
+      self.units.push(newUnit);
+      self.map.addChild(newUnit);
+    }
+  });
 };
 
 Game.prototype.tick = function() {
   requestAnimationFrame(this.tick.bind(this));
   this.renderer.render(this.stage);
+};
+
+Game.prototype.screenToTile = function(x, y) {
+  var newX = Math.floor((x - this.map.position.x) / this.map.tileWidth / this.map.zoom);
+  var newY = Math.floor((y - this.map.position.y) / this.map.tileHeight / this.map.zoom);
+  return [newX, newY];
+};
+
+Game.prototype.getUnitAt = function(x, y) {
+  for (var i = 0; i < this.units.length; i++) {
+    if (this.units[i].x === x && this.units[i].y === y) {
+      return this.units[i];
+    }
+  }
+  return null;
 };
 
 function getGameState(callback) {
@@ -38,10 +68,11 @@ function getGameState(callback) {
   xhr.send();
 }
 
-function Map(mapData) {
+function Map() {
   PIXI.Container.call(this);
   this.zoom = 1;
   this.interactive = true;
+  this.layers = [];
   this.on('mousedown', onDragStart)
       .on('touchstart', onDragStart)
       .on('mouseup', onDragEnd)
@@ -50,7 +81,6 @@ function Map(mapData) {
       .on('touchendoutside', onDragEnd)
       .on('mousemove', onDragMove)
       .on('touchmove', onDragMove);
-  this.createMap(mapData);
   game.renderer.view.addEventListener('wheel', onScroll.bind(this));
   game.stage.addChild(this);
 }
@@ -58,14 +88,18 @@ function Map(mapData) {
 Map.prototype = Object.create(PIXI.Container.prototype);
 Map.prototype.constructor = Map;
 
-Map.prototype.createMap = function(mapData) {
+Map.prototype.createMap = function(mapData, callback) {
   this.mapWidth = mapData.Width * mapData.Tileset.Tilewidth;
   this.mapHeight = mapData.Height * mapData.Tileset.Tileheight;
+  this.tileWidth = mapData.Tileset.Tilewidth;
+  this.tileHeight = mapData.Tileset.Tileheight;
   this.setZoom(2, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
   var self = this;
 
   loadTileset(mapData.Tileset, function() {
     for (var layer = 0; layer < mapData.Layers.length; layer++) {
+      var l = new PIXI.Container();
+      self.addChild(l);
       for (var x = 0; x < mapData.Width; x++) {
         for (var y = 0; y < mapData.Height; y++) {
           var tileID = mapData.Layers[layer][x + y * mapData.Width];
@@ -73,12 +107,14 @@ Map.prototype.createMap = function(mapData) {
             var sprite = PIXI.Sprite.fromFrame('tile-' + tileID);
             sprite.position.x = x * mapData.Tileset.Tilewidth;
             sprite.position.y = y * mapData.Tileset.Tileheight;
-            self.addChild(sprite);
+            l.addChild(sprite);
           }
         }
       }
+      l.cacheAsBitmap = true;
+      self.layers.push(l);
     }
-    this.cacheAsBitmap = true;
+    callback();
   });
 };
 
@@ -140,7 +176,20 @@ function onDragStart(e) {
 
 function onDragEnd() {
   if (this.dragging === 1) {
-    // TODO Activate unit
+    var pos = this.data.getLocalPosition(this.parent);
+    var newPos = game.screenToTile(pos.x, pos.y);
+    var x = newPos[0];
+    var y = newPos[1];
+    // if (game.selectedUnit === null) {
+    //   console.log('Selecting');
+    //   if (u !== null) {
+    //     game.selectedUnit = u;
+    //     var u = game.getUnitAt(x, y);
+    //   }
+    // } else {
+    //   console.log('Test');
+    //   game.selectedUnit.activateAt(x, y);
+    // }
   }
   this.dragging = 0;
   this.data = null;
@@ -158,5 +207,36 @@ function onDragMove() {
   }
 }
 
+function Unit(tileID, x, y, tileWidth, tileHeight) {
+  var texture = PIXI.utils.TextureCache['tile-'+tileID];
+  PIXI.Sprite.call(this, texture);
+  this.tileWidth = tileWidth;
+  this.tileHeight = tileHeight;
+  this.x = x;
+  this.y = y;
+  this.position.x = x * tileWidth;
+  this.position.y = y * tileHeight;
+}
+
+Unit.prototype = Object.create(PIXI.Sprite.prototype);
+Unit.prototype.constructor = Unit;
+
+Unit.prototype.moveTo = function(x, y) {
+  console.log('TODO: make moveTo function');
+};
+
+Unit.prototype.attack = function(x, y) {
+  console.log('TODO: make attack function');
+};
+
+Unit.prototype.activateAt = function(x, y) {
+  var u = game.getUnitAt(x, y);
+  if (u === null) {
+    this.moveTo(x, y);
+  } else {
+    this.attack(x, y);
+  }
+};
+
 var game = new Game();
-getGameState(game.setState);
+getGameState(game.setState.bind(game));

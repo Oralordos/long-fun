@@ -27,9 +27,12 @@ type jsonGameMap struct {
 	Tileheight int
 	Tilewidth  int
 	Tilesets   []struct {
-		Image       string
-		Imagewidth  int
-		Imageheight int
+		Image          string
+		Imagewidth     int
+		Imageheight    int
+		Tileproperties map[string]struct {
+			Team string
+		}
 	}
 }
 
@@ -38,6 +41,10 @@ type tileset struct {
 	Tileheight int
 	Width      int
 	Height     int
+	RedTeam    []int64
+	BlueTeam   []int64
+	YellowTeam []int64
+	GreenTeam  []int64
 	Filename   string
 }
 
@@ -108,6 +115,22 @@ func loadMap(filename string) (*game, error) {
 		}
 	}
 	mapData.Layers = gameLayers
+	for k, v := range jsonMapData.Tilesets[0].Tileproperties {
+		key, err := strconv.ParseInt(k, 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		switch v.Team {
+		case "red":
+			mapData.Tileset.RedTeam = append(mapData.Tileset.RedTeam, key)
+		case "blue":
+			mapData.Tileset.BlueTeam = append(mapData.Tileset.BlueTeam, key)
+		case "green":
+			mapData.Tileset.GreenTeam = append(mapData.Tileset.GreenTeam, key)
+		case "yellow":
+			mapData.Tileset.YellowTeam = append(mapData.Tileset.YellowTeam, key)
+		}
+	}
 	g := &game{
 		Map:   mapData,
 		Units: units,
@@ -133,11 +156,20 @@ func handleGetState(res http.ResponseWriter, req *http.Request, p httprouter.Par
 		http.NotFound(res, req)
 		return
 	}
-	gameMap, err := getGame(ctx, gameID)
-	if err != nil {
-		http.NotFound(res, req)
-		log.Warningf(ctx, err.Error())
-		return
+	var gameMap *game
+	if gameID == 1 {
+		gameMap, err = loadMap("test")
+		if err != nil {
+			http.Error(res, err.Error(), 500)
+			return
+		}
+	} else {
+		gameMap, err = getGame(ctx, gameID)
+		if err != nil {
+			http.NotFound(res, req)
+			log.Warningf(ctx, err.Error())
+			return
+		}
 	}
 	err = json.NewEncoder(res).Encode(gameMap)
 	if err != nil {
