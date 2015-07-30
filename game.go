@@ -11,9 +11,9 @@ import (
 
 func handleGame(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	var gameData struct {
-		Map string
+		GameID string
 	}
-	gameData.Map = "test"
+	gameData.GameID = "test"
 	err := tpl.ExecuteTemplate(res, "game", gameData)
 	if err != nil {
 		http.Error(res, "Internal Server Error", http.StatusInternalServerError)

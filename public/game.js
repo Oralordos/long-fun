@@ -1,29 +1,86 @@
 var SCREEN_WIDTH = 800;
 var SCREEN_HEIGHT = 600;
 
-var gameMap;
-
-function Map(mapWidth, mapHeight) {
+function Game() {
   PIXI.Container.call(this);
-  this.tiles = new PIXI.Container();
-  this.addChild(this.tiles);
-  this.mapWidth = mapWidth;
-  this.mapHeight = mapHeight;
-  this.zoom = 1;
-  this.cacheAsBitmap = true;
-  this.interactive = true;
-  this.on('mousedown', onDragStart)
-           .on('touchstart', onDragStart)
-           .on('mouseup', onDragEnd)
-           .on('mouseupoutside', onDragEnd)
-           .on('touchend', onDragEnd)
-           .on('touchendoutside', onDragEnd)
-           .on('mousemove', onDragMove)
-           .on('touchmove', onDragMove);
+  this.units = [];
+  this.map = null;
+  this.stage = new PIXI.Container();
+  this.renderer = PIXI.autoDetectRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, {backgroundColor: 0x1099bb});
+  document.querySelector('#game').appendChild(this.renderer.view);
+  requestAnimationFrame(this.tick.bind(this));
 }
 
-Map.prototype = PIXI.Container.prototype;
-Map.prototype.Contructor = Map;
+Game.prototype = Object.create(PIXI.Container.prototype);
+Game.prototype.constructor = Game;
+
+Game.prototype.setState = function(gameState) {
+  this.map = new Map(gameState.Map);
+};
+
+Game.prototype.tick = function() {
+  requestAnimationFrame(this.tick.bind(this));
+  this.renderer.render(this.stage);
+};
+
+function getGameState(callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/games/' + gameId);
+  xhr.addEventListener('readystatechange', function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      } else {
+        alert(xhr.responseText);
+      }
+    }
+  });
+  xhr.send();
+}
+
+function Map(mapData) {
+  PIXI.Container.call(this);
+  this.zoom = 1;
+  this.interactive = true;
+  this.on('mousedown', onDragStart)
+      .on('touchstart', onDragStart)
+      .on('mouseup', onDragEnd)
+      .on('mouseupoutside', onDragEnd)
+      .on('touchend', onDragEnd)
+      .on('touchendoutside', onDragEnd)
+      .on('mousemove', onDragMove)
+      .on('touchmove', onDragMove);
+  this.createMap(mapData);
+  game.renderer.view.addEventListener('wheel', onScroll.bind(this));
+  game.stage.addChild(this);
+}
+
+Map.prototype = Object.create(PIXI.Container.prototype);
+Map.prototype.constructor = Map;
+
+Map.prototype.createMap = function(mapData) {
+  this.mapWidth = mapData.Width * mapData.Tileset.Tilewidth;
+  this.mapHeight = mapData.Height * mapData.Tileset.Tileheight;
+  this.setZoom(2, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+  var self = this;
+
+  loadTileset(mapData.Tileset, function() {
+    for (var layer = 0; layer < mapData.Layers.length; layer++) {
+      for (var x = 0; x < mapData.Width; x++) {
+        for (var y = 0; y < mapData.Height; y++) {
+          var tileID = mapData.Layers[layer][x + y * mapData.Width];
+          if (tileID !== 0) {
+            var sprite = PIXI.Sprite.fromFrame('tile-' + tileID);
+            sprite.position.x = x * mapData.Tileset.Tilewidth;
+            sprite.position.y = y * mapData.Tileset.Tileheight;
+            self.addChild(sprite);
+          }
+        }
+      }
+    }
+    this.cacheAsBitmap = true;
+  });
+};
 
 Map.prototype.setZoom = function(s, mouseX, mouseY) {
   var maxX = this.mapWidth / SCREEN_WIDTH;
@@ -44,11 +101,6 @@ Map.prototype.setPosition = function(x, y) {
   this.position.y = Math.min(Math.max(y, SCREEN_HEIGHT - this.mapHeight * this.zoom), 0);
 };
 
-function animate() {
-  requestAnimationFrame(animate);
-  renderer.render(stage);
-}
-
 function onTilesetLoaded(width, height, tileWidth, tileHeight, filename, callback) {
   var texture = PIXI.utils.TextureCache[filename];
   for (var y = 0; y < height; y++) {
@@ -61,59 +113,10 @@ function onTilesetLoaded(width, height, tileWidth, tileHeight, filename, callbac
   callback();
 }
 
-function loadTileset(width, height, tileWidth, tileHeight, filename, callback) {
-  PIXI.loader.add('tiles', filename)
-             .once('complete', onTilesetLoaded.bind(null, width, height, tileWidth, tileHeight, filename, callback))
+function loadTileset(tileset, callback) {
+  PIXI.loader.add('tiles', tileset.Filename)
+             .once('complete', onTilesetLoaded.bind(null, tileset.Width, tileset.Height, tileset.Tilewidth, tileset.Tileheight, tileset.Filename, callback))
              .load();
-}
-
-function loadMap(callback) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/maps/' + map);
-  xhr.addEventListener('readystatechange', function() {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        callback(JSON.parse(xhr.responseText));
-      } else {
-        alert(xhr.responseText);
-      }
-    }
-  });
-  xhr.send();
-}
-
-function createMap(mapData) {
-  var mapWidth = mapData.Tilewidth * mapData.Width;
-  var mapHeight = mapData.Tileheight * mapData.Height;
-
-  var tilesX = mapData.Tilesets[0].Imagewidth / mapData.Tilewidth;
-  var tilesY = mapData.Tilesets[0].Imageheight / mapData.Tileheight;
-
-  gameMap = new Map(mapWidth, mapHeight);
-
-  loadTileset(tilesX, tilesY, mapData.Tilewidth, mapData.Tileheight, '/public/images/toens-medieval-strategy.png', function() {
-    for (var layer = 0; layer < mapData.Layers.length; layer++) {
-      if (mapData.Layers[layer].Name != 'UnitLayer') {
-        for (var x = 0; x < mapData.Width; x++) {
-          for (var y = 0; y < mapData.Height; y++) {
-            var tileId = mapData.Layers[layer].Data[x + y * mapData.Width];
-            if (tileId !== 0) {
-              var sprite = PIXI.Sprite.fromFrame('tile-' + tileId);
-              // TODO Setup animation
-              sprite.position.x = x * mapData.Tilewidth;
-              sprite.position.y = y * mapData.Tileheight;
-              gameMap.tiles.addChild(sprite);
-            }
-          }
-        }
-      } else {
-        // TODO Load units
-      }
-    }
-    gameMap.setZoom(2, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-    document.querySelector('canvas').addEventListener('wheel', onScroll.bind(gameMap));
-    stage.addChild(gameMap);
-  });
 }
 
 function onScroll(e) {
@@ -155,8 +158,5 @@ function onDragMove() {
   }
 }
 
-var stage = new PIXI.Container();
-var renderer = PIXI.autoDetectRenderer(SCREEN_WIDTH, SCREEN_HEIGHT);
-document.querySelector('#game').appendChild(renderer.view);
-loadMap(createMap);
-requestAnimationFrame(animate);
+var game = new Game();
+getGameState(game.setState);

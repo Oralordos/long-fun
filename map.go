@@ -11,38 +11,83 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-type gameMap struct {
+type jsonGameMap struct {
 	Height int
 	Width  int
 	Layers []struct {
 		Name string
-		Data []int32
+		Data []int
 	}
 	Tileheight int
 	Tilewidth  int
 	Tilesets   []struct {
+		Image       string
 		Imagewidth  int
 		Imageheight int
 	}
 }
 
-func loadMap(filename string) (*gameMap, error) {
+type tileset struct {
+	Tilewidth  int
+	Tileheight int
+	Width      int
+	Height     int
+	Filename   string
+}
+
+type gameMap struct {
+	Width   int
+	Height  int
+	Layers  [][]int
+	Tileset tileset
+}
+
+type game struct {
+	Map   gameMap
+	Units int
+}
+
+func loadMap(filename string) (*game, error) {
 	f, err := os.Open("maps/" + filename + ".json")
 	if err != nil {
 		return nil, err
 	}
 	defer f.Close()
-	var mapData gameMap
-	err = json.NewDecoder(f).Decode(&mapData)
+	var jsonMapData jsonGameMap
+	err = json.NewDecoder(f).Decode(&jsonMapData)
 	if err != nil {
 		return nil, err
 	}
-	return &mapData, nil
+	mapData := gameMap{
+		Width:  jsonMapData.Width,
+		Height: jsonMapData.Height,
+		Tileset: tileset{
+			Width:      jsonMapData.Tilesets[0].Imagewidth / jsonMapData.Tilewidth,
+			Height:     jsonMapData.Tilesets[0].Imageheight / jsonMapData.Tileheight,
+			Tilewidth:  jsonMapData.Tilewidth,
+			Tileheight: jsonMapData.Tileheight,
+			Filename:   jsonMapData.Tilesets[0].Image[3:],
+		},
+	}
+	gameLayers := [][]int{}
+	for _, l := range jsonMapData.Layers {
+		if l.Name == "Unit Layer" {
+			// TODO Load the units.
+		} else {
+			gameLayers = append(gameLayers, l.Data)
+		}
+	}
+	mapData.Layers = gameLayers
+	g := &game{
+		Map: mapData,
+	}
+	return g, nil
 }
 
-func handleMap(res http.ResponseWriter, req *http.Request, p httprouter.Params) {
+func handleGetState(res http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	ctx := appengine.NewContext(req)
-	mapName := p.ByName("mapName")
+	mapName := p.ByName("gameName")
+	// TODO Get the map name from the datastore
 	gameMap, err := loadMap(mapName)
 	if err != nil {
 		http.Error(res, "Internal Server Error", http.StatusInternalServerError)

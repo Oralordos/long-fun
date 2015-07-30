@@ -9,6 +9,6 @@ import (
 func init() {
 	r := httprouter.New()
 	r.GET("/", handleGame)
-	r.GET("/maps/:mapName", handleMap)
+	r.GET("/games/:gameName", handleGetState)
 	http.Handle("/", r)
 }
