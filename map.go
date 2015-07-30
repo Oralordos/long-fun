@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
+	"strconv"
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
@@ -81,8 +82,13 @@ func loadMap(filename string) (*game, error) {
 
 func handleGetState(res http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	ctx := appengine.NewContext(req)
-	mapName := p.ByName("gameName")
+	gn := p.ByName("gameName")
+	gameName, err := strconv.ParseInt(gn, 10, 64)
+	var mapName string
 	// TODO Get the map name from the datastore
+	if gameName == 1 {
+		mapName = "test"
+	}
 	gameMap, err := loadMap(mapName)
 	if err != nil {
 		http.Error(res, "Internal Server Error", http.StatusInternalServerError)

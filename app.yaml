@@ -6,5 +6,8 @@ api_version: go1
 handlers:
 - url: /public
   static_dir: public
+- url: /create
+  login: required
+  script: _go_app
 - url: /.*
   script: _go_app

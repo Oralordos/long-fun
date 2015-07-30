@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Game</title>
+  <link rel="stylesheet" href="/public/reset.css">
 </head>
 <body>
   {{if .Username}}
@@ -10,6 +11,7 @@
   <a href="/gamesList">Your games</a>
   {{else}}
   <a href="{{.LoginURL}}">Login</a>
+  <a href="/create">Create Account</a>
   {{end}}
 </body>
 </html>{{end}}

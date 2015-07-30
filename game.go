@@ -2,6 +2,7 @@ package game
 
 import (
 	"net/http"
+	"strconv"
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
@@ -16,16 +17,17 @@ type game struct {
 }
 
 type gameID struct {
-	ID   int
+	ID   int64
 	Name string
 }
 
-func handleGame(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
+func handleGame(res http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	var gameData struct {
-		GameID string
+		GameID int64
 	}
-	gameData.GameID = "test"
-	err := tpl.ExecuteTemplate(res, "game", gameData)
+	id, err := strconv.ParseInt(p.ByName("gameID"), 10, 64)
+	gameData.GameID = id
+	err = tpl.ExecuteTemplate(res, "game", gameData)
 	if err != nil {
 		http.Error(res, "Internal Server Error", http.StatusInternalServerError)
 		ctx := appengine.NewContext(req)
