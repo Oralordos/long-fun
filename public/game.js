@@ -30,7 +30,7 @@ Game.prototype.setState = function(gameState) {
       var currentUnit = gameState.Units[i];
       var newUnit = new Unit(currentUnit.TileID, currentUnit.Position.X, currentUnit.Position.Y, gameState.Map.Tileset.Tilewidth, gameState.Map.Tileset.Tileheight);
       self.units.push(newUnit);
-      self.map.addChild(newUnit);
+      self.map.units.addChild(newUnit);
     }
   });
 };
@@ -94,6 +94,8 @@ Map.prototype = Object.create(PIXI.Container.prototype);
 Map.prototype.constructor = Map;
 
 Map.prototype.createMap = function(mapData, callback) {
+  this.units = new PIXI.Container();
+  this.overlay = new PIXI.Container();
   this.mapWidth = mapData.Width * mapData.Tileset.Tilewidth;
   this.mapHeight = mapData.Height * mapData.Tileset.Tileheight;
   this.tileWidth = mapData.Tileset.Tilewidth;
@@ -121,6 +123,8 @@ Map.prototype.createMap = function(mapData, callback) {
       l.cacheAsBitmap = true;
       self.layers.push(l);
     }
+    self.addChild(self.units);
+    self.addChild(self.overlay);
     callback();
   });
 };
