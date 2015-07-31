@@ -30,22 +30,22 @@ type jsonGameMap struct {
 		Image          string
 		Imagewidth     int
 		Imageheight    int
-		Tileproperties map[string]struct {
-			Team string
-		}
+		Tileproperties map[string]map[string]string
 	}
 }
 
 type tileset struct {
-	Tilewidth  int
-	Tileheight int
-	Width      int
-	Height     int
-	RedTeam    []int64
-	BlueTeam   []int64
-	YellowTeam []int64
-	GreenTeam  []int64
-	Filename   string
+	Tilewidth       int
+	Tileheight      int
+	Width           int
+	Height          int
+	RedTeam         []int64
+	BlueTeam        []int64
+	YellowTeam      []int64
+	GreenTeam       []int64
+	Filename        string
+	MoveIndicator   int64
+	AttackIndicator int64
 }
 
 type mapLayers [][]int
@@ -95,6 +95,10 @@ func loadMap(filename string) (*game, error) {
 			Tilewidth:  jsonMapData.Tilewidth,
 			Tileheight: jsonMapData.Tileheight,
 			Filename:   jsonMapData.Tilesets[0].Image[2:],
+			RedTeam:    []int64{},
+			BlueTeam:   []int64{},
+			GreenTeam:  []int64{},
+			YellowTeam: []int64{},
 		},
 	}
 	gameLayers := mapLayers{}
@@ -117,18 +121,31 @@ func loadMap(filename string) (*game, error) {
 	mapData.Layers = gameLayers
 	for k, v := range jsonMapData.Tilesets[0].Tileproperties {
 		key, err := strconv.ParseInt(k, 10, 64)
+		key++
 		if err != nil {
 			return nil, err
 		}
-		switch v.Team {
-		case "red":
-			mapData.Tileset.RedTeam = append(mapData.Tileset.RedTeam, key)
-		case "blue":
-			mapData.Tileset.BlueTeam = append(mapData.Tileset.BlueTeam, key)
-		case "green":
-			mapData.Tileset.GreenTeam = append(mapData.Tileset.GreenTeam, key)
-		case "yellow":
-			mapData.Tileset.YellowTeam = append(mapData.Tileset.YellowTeam, key)
+		for prop, propValue := range v {
+			switch prop {
+			case "team":
+				switch propValue {
+				case "red":
+					mapData.Tileset.RedTeam = append(mapData.Tileset.RedTeam, key)
+				case "blue":
+					mapData.Tileset.BlueTeam = append(mapData.Tileset.BlueTeam, key)
+				case "green":
+					mapData.Tileset.GreenTeam = append(mapData.Tileset.GreenTeam, key)
+				case "yellow":
+					mapData.Tileset.YellowTeam = append(mapData.Tileset.YellowTeam, key)
+				}
+			case "indicator":
+				switch propValue {
+				case "move":
+					mapData.Tileset.MoveIndicator = key
+				case "attack":
+					mapData.Tileset.AttackIndicator = key
+				}
+			}
 		}
 	}
 	g := &game{

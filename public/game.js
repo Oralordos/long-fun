@@ -6,6 +6,8 @@ function Game() {
   this.units = [];
   this.selectedUnit = null;
   this.map = null;
+  // TODO Change to get from JSON data.
+  this.currentPlayer = 'red';
   this.stage = new PIXI.Container();
   this.renderer = PIXI.autoDetectRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, {backgroundColor: 0x1099bb});
   document.querySelector('#game').appendChild(this.renderer.view);
@@ -46,7 +48,10 @@ Game.prototype.screenToTile = function(x, y) {
 
 Game.prototype.getUnitAt = function(x, y) {
   for (var i = 0; i < this.units.length; i++) {
-    if (this.units[i].x === x && this.units[i].y === y) {
+    unit = this.units[i];
+    unitX = Math.floor(unit.position.x / this.map.tileWidth);
+    unitY = Math.floor(unit.position.y / this.map.tileHeight);
+    if (unitX === x && unitY === y) {
       return this.units[i];
     }
   }
@@ -93,6 +98,8 @@ Map.prototype.createMap = function(mapData, callback) {
   this.mapHeight = mapData.Height * mapData.Tileset.Tileheight;
   this.tileWidth = mapData.Tileset.Tilewidth;
   this.tileHeight = mapData.Tileset.Tileheight;
+  this.moveIndicator = mapData.Tileset.MoveIndicator;
+  this.attackIndicator = mapData.Tileset.AttackIndicator;
   this.setZoom(2, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
   var self = this;
 
@@ -180,16 +187,18 @@ function onDragEnd() {
     var newPos = game.screenToTile(pos.x, pos.y);
     var x = newPos[0];
     var y = newPos[1];
-    // if (game.selectedUnit === null) {
-    //   console.log('Selecting');
-    //   if (u !== null) {
-    //     game.selectedUnit = u;
-    //     var u = game.getUnitAt(x, y);
-    //   }
-    // } else {
-    //   console.log('Test');
-    //   game.selectedUnit.activateAt(x, y);
-    // }
+    var u = game.getUnitAt(x, y);
+    if (u !== null) {
+      if (u.team === game.currentPlayer) {
+        game.selectedUnit = u;
+      } else if (game.selectedUnit !== null) {
+        game.selectedUnit.attack(x, y);
+      }
+    } else {
+      if (game.selectedUnit !== null) {
+        game.selectedUnit.moveTo(x, y);
+      }
+    }
   }
   this.dragging = 0;
   this.data = null;
@@ -212,10 +221,17 @@ function Unit(tileID, x, y, tileWidth, tileHeight) {
   PIXI.Sprite.call(this, texture);
   this.tileWidth = tileWidth;
   this.tileHeight = tileHeight;
-  this.x = x;
-  this.y = y;
   this.position.x = x * tileWidth;
   this.position.y = y * tileHeight;
+  if (game.redIDs.indexOf(tileID) != -1) {
+    this.team = 'red';
+  } else if (game.blueIDs.indexOf(tileID) != -1) {
+    this.team = 'blue';
+  } else if (game.greenIDs.indexOf(tileID) != -1) {
+    this.team = 'green';
+  } else if (game.yellowIDs.indexOf(tileID) != -1) {
+    this.team = 'yellow';
+  }
 }
 
 Unit.prototype = Object.create(PIXI.Sprite.prototype);
@@ -227,15 +243,6 @@ Unit.prototype.moveTo = function(x, y) {
 
 Unit.prototype.attack = function(x, y) {
   console.log('TODO: make attack function');
-};
-
-Unit.prototype.activateAt = function(x, y) {
-  var u = game.getUnitAt(x, y);
-  if (u === null) {
-    this.moveTo(x, y);
-  } else {
-    this.attack(x, y);
-  }
 };
 
 var game = new Game();

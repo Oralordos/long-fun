@@ -169,6 +169,14 @@
                 {
                  "team":"green"
                 },
+             "297":
+                {
+                 "indicator":"attack"
+                },
+             "298":
+                {
+                 "indicator":"move"
+                },
              "37":
                 {
                  "team":"red"

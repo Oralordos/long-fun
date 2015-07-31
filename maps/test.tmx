@@ -178,6 +178,16 @@
   <tile id="213" terrain=",0,,"/>
   <tile id="214" terrain="0,0,,"/>
   <tile id="215" terrain="0,,,"/>
+  <tile id="297">
+   <properties>
+    <property name="indicator" value="attack"/>
+   </properties>
+  </tile>
+  <tile id="298">
+   <properties>
+    <property name="indicator" value="move"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Water Layer" width="50" height="50">
   <data encoding="base64" compression="zlib">
