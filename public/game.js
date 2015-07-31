@@ -130,11 +130,10 @@ Map.prototype.createMap = function(mapData, callback) {
 };
 
 Map.prototype.setZoom = function(s, mouseX, mouseY) {
-  var maxX = this.mapWidth / SCREEN_WIDTH;
-  var maxY = this.mapHeight / SCREEN_HEIGHT;
-  var minZoom = Math.min(maxX, maxY);
+  var maxX = SCREEN_WIDTH / this.mapWidth;
+  var maxY = SCREEN_HEIGHT / this.mapHeight;
   var oldZoom = this.zoom;
-  var newZoom = Math.min(Math.max(s, minZoom), 6);
+  var newZoom = Math.min(Math.max(s, maxX, maxY), 6);
   this.zoom = newZoom;
   this.scale = new PIXI.Point(newZoom, newZoom);
   var zoomScale = newZoom / oldZoom;
