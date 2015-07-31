@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="Toen's Medieval Strategy" tilewidth="16" tileheight="16">
+  <image source="../public/images/toens-medieval-strategy.png" width="112" height="832"/>
+  <terraintypes>
+   <terrain name="Grass" tile="-1"/>
+  </terraintypes>
+  <tile id="2" terrain="0,0,0,0"/>
+  <tile id="37">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="40">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="112">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="113">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="114">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="115">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="116">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="117">
+   <properties>
+    <property name="team" value="blue"/>
+   </properties>
+  </tile>
+  <tile id="119">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="120">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="121">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="122">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="123">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="124">
+   <properties>
+    <property name="team" value="red"/>
+   </properties>
+  </tile>
+  <tile id="126">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="127">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="128">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="129">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="130">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="131">
+   <properties>
+    <property name="team" value="yellow"/>
+   </properties>
+  </tile>
+  <tile id="133">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="134">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="135">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="136">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="137">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="138">
+   <properties>
+    <property name="team" value="green"/>
+   </properties>
+  </tile>
+  <tile id="175" terrain="0,0,0,"/>
+  <tile id="176" terrain="0,0,,"/>
+  <tile id="177" terrain="0,0,,0"/>
+  <tile id="178" terrain="0,0,0,"/>
+  <tile id="179" terrain="0,0,,"/>
+  <tile id="180" terrain="0,0,,0"/>
+  <tile id="182" terrain="0,,0,"/>
+  <tile id="184" terrain=",0,,0"/>
+  <tile id="185" terrain="0,,0,"/>
+  <tile id="187" terrain=",0,,0"/>
+  <tile id="189" terrain="0,,0,0"/>
+  <tile id="190" terrain=",,0,0"/>
+  <tile id="191" terrain=",0,0,0"/>
+  <tile id="192" terrain="0,,0,0"/>
+  <tile id="193" terrain=",,0,0"/>
+  <tile id="194" terrain=",0,0,0"/>
+  <tile id="196" terrain=",,,0"/>
+  <tile id="197" terrain=",,0,0"/>
+  <tile id="198" terrain=",,0,"/>
+  <tile id="199" terrain=",,,0"/>
+  <tile id="200" terrain=",,0,0"/>
+  <tile id="201" terrain=",,0,"/>
+  <tile id="203" terrain=",0,,0"/>
+  <tile id="205" terrain="0,,0,"/>
+  <tile id="206" terrain=",0,,0"/>
+  <tile id="208" terrain="0,,0,"/>
+  <tile id="210" terrain=",0,,"/>
+  <tile id="211" terrain="0,0,,"/>
+  <tile id="212" terrain="0,,,"/>
+  <tile id="213" terrain=",0,,"/>
+  <tile id="214" terrain="0,0,,"/>
+  <tile id="215" terrain="0,,,"/>
+  <tile id="297">
+   <properties>
+    <property name="indicator" value="attack"/>
+   </properties>
+  </tile>
+  <tile id="298">
+   <properties>
+    <property name="indicator" value="move"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Water Layer" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKHr3+RbDpZDwVVTVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/AVbjywg=
+  </data>
+ </layer>
+ <layer name="Ground Layer" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztXImKFDEUDOz//4vHiiiircN6IS7ieHyOUziPzTZ95HXSqdfJKyiQWdbtqco7cvVNCOHG+YjfAw/s726Nzy/8laVoHtjf3xKfXPg3T85ssDWwRGaeErA1sMTXmVqWAFsDK2TXDQFbBwu04gXA1sICf2SrWA5sLdhEbLB7qhhsPdheWMlTArYmTFrKUwK2Jky+LKBfabA1YdLCfGMMtiZMvr3wa76ERcHWhE1rNYStB5vWchZbDzY9PmzR48MOfT5oiz7/sEX3ww4t5iqArQuLFvZmp8DWhUEL5xbmwNamNq3td4zB1qfFuLi78MuVn5S/y9aophe16ve36O9qezi2Tq158fnCU/S3tesxbK32Zs16MfYC1K7ps/Xa24tacYGaMfZC+D6k1xG2Zi14AbxZeZ7UOsLWbQ/WrBfAVJ5yPzheAPcJz4U6kpKz2PqVZu11EMTGkPhsKb0WW7+j+7FWN2Km7H2x9SvNmvuvKXUjZkoNYet3ZD9eKZ+tNT/Qwz698sXoZ6jjt8HGfCNnrLA1TuV4LfA++vwc6q/ZamPj6PGBWDhfiXE/1vt34PgAIDaGoP9OR6nnGOOSh6Dxn2BzL1WwJTasxgfGPfSG9rdheuxbxpa6YSE+pPZC+3N4GP9H0n4KmvmGFT8YaxY1oJ1vsPOV1OAWvQBS1qmsxIf1cwK52NpTxUxZy/H8lIbc2KgVH63HhaCEH3vPz62euSwNzZo6Kz56yFGCnB53bz9kXnGkHIVa/DHoz6bJ7w6hjB8pe4Q95CcZ31vuF2xdG5nj2jO07gUgmm7xIz5rWIJrPW/rXgCi6Za93FK1A0w5P9y6F/Eax5b7/7l+yP4Mam6Kjmv/15G9mKrFmrOCgLZ+yN4B1q237Bv05EVqDo+h8aPE3Hguvo7Uz05hSUdNXU+dl5cavy3VCsHanpHmHQDYFx6fncj1eAlxTLTixRCWtdPW9bWaXvLe1dH2S5eg2S8qFSOW74bWAmLg3ZVYB/kQ/t/VG0J67dW+twSeYOzKHrTs/beQU5aAMQ5toTP0htboT++u/8bnQ9D1oLk9Vo+AD9B7Kt8g3w8Tn+fQ4rsyLEDG/RDK6l2jN20JUgOGUM8Hz1WPIfsQLB+E1t4JVxuMnDTHVua8WqA+S390CnwfpG70NleQnGTFg5g99VRL/aoV9uAHs0/SssU6jjhAPsIc2kqNniPqBdY2ZO2ppT5X6vMQ+DrPUe6WjPdHZe3p6LVc1pLAU+DrPRcDR7zXo0XOPaAacaA5I9ACSp8Dy81B8R23XjwQlDwjmeNBj9pPofSZvBTG55RargNbUMMP6UV7zUGp2LOOxx54DKwj9/7oWi7yGEhHqTtAYx9anxfshVLnuNEb9XL2Yk/E8w2Zbz0bfSa5P14Tin/udaEcfoYHveN1n7l5gLxfR+ix4HA4HA6Hw+FwOBwOh8PhcDgcjp7xD+p9gJY=
+  </data>
+ </layer>
+ <layer name="Doodad Layer" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztnF1vozAQReel4SHtP9zdl6paabX//3kXtVZvbscpGAda5xwJhQDB0VzmA9sQEfEQr8yf09vng2yf3paZk+w7yfaw7892Tv3dg2yPyu+13VNy3Kiorae4tEGxYdj3sp7ZufBs+2t66PrJjgs7Z1zZNgpq28z2qlXER7u6Dcs5in9EfNTANdf/4Etpw881KhoP/PpVfabKevndKS7tpnpMyX73g3Kcx04/fnRqMWKS9dr+zHc0f6gfeB7I/EP91OPYvaD2qtnCfUhjmWun8cp/4/nb80+Wx+6NLC9keVr1Cvn0nK3+cZJj1LZ+Pq8R7h2NHXrNF3u6/6h9s3pr5kX212op1Rde0TyZ1Uy12K56qH0LL7Ke1XCQ4/lgsu9ZPet1V1Y/ZXrA52gMymJJVldpHNO8UdMDlqP2rN2rl+/qF6phdv2jRxueB9w/vKaN+OgXWV5AjzayGspjl9dImuOzvqsZ9GjD6x73D++nUN+IyPtpZ9CjDb/mM7+IuPSDJX0Y6NGG+0Gtz6QWl2r8/r/8PGD51WCDr4bGqiV17hKO8o9R/NL7sWp9J0tBj22oT3iubrm3Ro92vJ8w669dyxq7nBvb2NruV8TvI3r1eS+xy1O8a6Hrt273K+P9Hb3G4z6zy2z7R/ksy63b/S70HhddosdTvPvF49t60egs+546tnuvXLOL6lDsXXSoHd+j3ZFYO4ZRs4vGJtck06NotbXdkaj1UV0js4vHp7Oth21rySej69E6tlfTYybTY0s+/xHv/SV/G8/xHfB5b779Gpkeft33qqmePz9kCLKaa+mchD3jxj3poT6yZs4mevTFx9HX9rejRz98PNDnMiwBPfqRzSPR7UtAj37U5jSsYU89/sTlGOFo1Oalr5lzPvp92V7oeJQ/i7DmvlCv2RHGtI8im8Or/tHC6PH9lvjYufpKK+jRht/7aR7ZAnqsx58h6Dl2ix7ryeYkosdxZM8c9AI91qO5GwAAAAAAAAAAAAAAAAAAoAdrnwmF21Cej4PjKc/ywrG0vNMB+qLvFoDj8Pc8wP6UvNDr2XVYztmWa++cgdtRrn/1BdiXx9j+HhPYhr9Phlh0DJ4XygL74e9KhP3wmpS8cAzFB7Q+Qof98HeBql+QDwAAAAAAAAAAAAAAAAAAAAAA+vMP9mg5FA==
+  </data>
+ </layer>
+ <layer name="Unit Layer" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1sEKgzAMBmDfeRO8edxr7yDiKAwmdk0w33fTU0j6p50mAAAAAIBx1ugCitHv/MyIqn45+/IxXttzM4CNLAAAAADP6AIK+9b7eWgV/b2iC+hALvLY8/Bo/rff/Jd+52Y+AGPc4Z0L1GJvwUYW4CAPAFzR3iPuFSo7e/7lBQAAAACASEt0AQAf7KR4ZgBkYR8BAAAAAAAAAAAA5PIGbg8Oqg==
+  </data>
+ </layer>
+</map>
